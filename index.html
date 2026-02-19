@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Memoriam | Sam Freund</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            animation: fadeIn 3s ease-in;
+        }
+
+        img {
+            max-width: 280px;
+            height: auto;
+            border: 1px solid #333;
+            margin-bottom: 30px;
+            filter: grayscale(100%);
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 2.8rem;
+            margin: 10px 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .dates {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            color: #cccccc;
+        }
+
+        .subtitle {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #888;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        #phrase {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            min-height: 1.5em;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background-color: #444;
+            margin: 30px auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tributes-container {
+            text-align: left;
+            margin-top: 50px;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        .tribute-title {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .tribute-entry {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #111;
+            padding-bottom: 10px;
+        }
+
+        .tribute-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+
+        .tribute-text {
+            font-style: italic;
+            color: #999;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .flower-link {
+            font-size: 0.8rem;
+            color: #444;
+            text-decoration: none;
+            margin-top: 60px;
+            display: block;
+            font-style: italic;
+        }
+
+        .flower-link:hover {
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="subtitle">In Memoriam</div>
+
+        <img src="https://samfreund.dev/assets/headshot-DT4DF2MT.jpg" alt="Sam Freund">
+
+        <h1>Sam Freund</h1>
+
+        <div class="dates">
+            April 17, 2007 — <span id="death-date"></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <p id="phrase"></p>
+
+        <div class="divider"></div>
+
+        <div class="tributes-container">
+            <div class="tribute-title">TRIBUTES</div>
+            <div id="tribute-list">
+            </div>
+        </div>
+
+        <a href="https://www.youtube.com/watch?v=XfELJU1mRMg" class="flower-link">
+            In lieu of flowers, please donate to the Sam Freund Foundation for People Who Can't Code Good
+        </a>
+    </div>
+
+    <script>
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        document.getElementById('death-date').textContent = tomorrow.toLocaleDateString('en-US', options);
+
+        const phrases = [
+            "Rest in peace.",
+            "Rest in peace.",
+            "Good riddance.",
+            "Bye bye!",
+            "Gone but not forgotten.",
+            "Gone and forgotten.",
+            "Took him long enough.",
+            "The world is a better place now.",
+            "Sleep fast.",
+            "See you tomorrow."
+        ];
+        document.getElementById("phrase").innerText = phrases[Math.floor(Math.random() * phrases.length)];
+
+        const tributePool = [
+            ["Anonymous", "He was the cause of literally every problem on the Milwaukee Cyber Cheese."],
+            ["Andrew W.", "You could always hear him coming down the hall... he jingled."],
+            ["Anonymous", "He was my favorite dumb blonde."],
+            ["Dan A.", "I'll always remember how he was instantly replaced in theatre and how everyone liked his replacement better."],
+            ["Eleanor R.", "He may have been loud and annoying, but he was also noisy and irritating."],
+            ["Anonymous", "My favorite thing he used to do was leave the room."],
+            ["Internal Revenue Service of the U.S. Government", "We will be pursuing his estate for the $4.12 he owes in back taxes from 2022."],
+            ["Samantha P.", "Instead of a plaque, we are dedicated the back corner of the house right storage closet to Sam. It's just as cluttered and confusing as he was."],
+            ["Anonymous", "He was always the most forgettable white guy in the room."],
+            ["Adriana R.", "His butt is forever immortalized swaying in vampire cinema. We definitely know her."],
+            ["Anonymous", "Maybe you'll finally be able to know 'er in the afterlife."]
+        ];
+
+        function shuffleArray(array) {
+            let currentIndex = array.length;
+
+            while (currentIndex != 0) {
+
+                let randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function displayTributes() {
+            const listElement = document.getElementById("tribute-list");
+            const selectedTributes = shuffleArray(tributePool).slice(0, 3);
+
+            selectedTributes.forEach(tribute => {
+                const entry = document.createElement("div");
+                entry.className = "tribute-entry";
+                
+                entry.innerHTML = `
+                    <div class="tribute-name">${tribute[0]}</div>
+                    <div class="tribute-text">"${tribute[1]}"</div>
+                `;
+                listElement.appendChild(entry);
+            });
+        }
+
+        displayTributes();
+    </script>
+
+</body>
+
+</html>
