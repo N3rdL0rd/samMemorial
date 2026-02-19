@@ -150,6 +150,44 @@
         #name {
             cursor: pointer;
         }
+
+        .respects-btn {
+            background: none;
+            border: 1px solid #444;
+            color: #666;
+            padding: 10px 20px;
+            font-family: "Times New Roman";
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .respects-btn:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .flower {
+            position: fixed;
+            bottom: -50px;
+            font-size: 2rem;
+            user-select: none;
+            pointer-events: none;
+            z-index: 100;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        #respects {
+            display: none;
+        }
+
+        #respects.visible {
+            display: block !important;
+        }
     </style>
 </head>
 
@@ -178,9 +216,17 @@
             </div>
         </div>
 
-    
+        <div class="divider"></div>
+
+        <div id="respects">
+            <button class="respects-btn" id="respect-trigger">Pay Respects (F)</button>
+            <div style="font-size: 0.8rem; color: #444; margin-top: 10px;">
+                <span id="candle-count">14,203</span> tributes sent for Sam.
+            </div>
+        </div>
+
         <span class="flower-link"><a href="https://www.youtube.com/watch?v=XfELJU1mRMg">In lieu of flowers, please donate to the Sam Freund Foundation for People Who Can't Code Good</a>
-            <span>NOTE: This website is a joke. Sadly, Samuel Micah Freund is not yet dead (as of Feb 19th, 2026).</span>
+            <span>Note: This website is a satirical work. Sadly, Samuel Micah Freund is currently alive (as of Feb 19, 2026).</span>
         </span>
     </div>
 
@@ -201,7 +247,8 @@
             "Took him long enough.",
             "The world is a better place now.",
             "See you tomorrow.",
-            "Thank God."
+            "Thank God.",
+            "Connection closed by remote host."
         ];
         function newPhrase() {
             document.getElementById("phrase").innerText = phrases[Math.floor(Math.random() * phrases.length)];
@@ -268,7 +315,7 @@
         document.getElementById("tribute-title").onclick = displayTributes;
         document.getElementById("phrase").onclick = newPhrase;
 
-        const nicknames = ["Blonde Jesus", "techguy763", "948-byte", "Weird Beard", "Looked Like a 25-year-old Since 8th Grade", "World's Worst Tech Director", "No Cool Nickname", "Slightly Worse Henry Martin"];
+        const nicknames = ["Blonde Jesus", "techguy763", "948-byte", "Weird Beard", "Looked Like a 25-year-old Since 8th Grade", "World's Worst Tech Director", "No Cool Nickname", "Slightly Worse Henry Martin", "Blackmail, maybe?", "Egotist, not a Narcissist", "Telltale Jingle"];
 
         function addFullName() {
             document.getElementById("first").innerText = "Samuel";
@@ -283,6 +330,9 @@
         function vandalizePicture() {
             document.getElementById("picture").src = "./headshot_vandalized.jpg";
         }
+        function showRespects() {
+            document.getElementById("respects").className = "visible";
+        }
 
         if (Math.random() > 0.90) {
             addFullName();
@@ -295,6 +345,28 @@
         }
         
         document.getElementById("name").onclick = addNickname;
+
+        if (Math.random() > 0.75) {
+            showRespects();
+        }
+
+        function payRespects() {
+            showRespects();
+            const flowers = ['🥀', '🕯️', '💔', '🕊️🕊️'];
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            flower.style.left = Math.random() * 100 + "vw";
+            document.body.appendChild(flower);
+            
+            const count = document.getElementById('candle-count');
+            count.innerText = (parseInt(count.innerText.replace(',', '')) + 1).toLocaleString();
+            
+            setTimeout(() => flower.remove(), 4000);
+        }
+
+        window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'f') payRespects(); });
+        document.getElementById('respect-trigger').onclick = payRespects;
     </script>
 
 </body>
