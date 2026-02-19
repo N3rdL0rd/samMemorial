@@ -33,6 +33,10 @@
             filter: grayscale(100%);
         }
 
+        img.nofilter {
+            filter: grayscale(5%) !important;
+        }
+
         h1 {
             font-weight: normal;
             font-size: 2.8rem;
@@ -367,6 +371,12 @@
 
         window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'f') payRespects(); });
         document.getElementById('respect-trigger').onclick = payRespects;
+
+        if (new Date().getMonth() === 11) {
+            document.querySelector('.subtitle').innerText = "A Very Merry Memorial";
+            document.querySelector('#picture').src = "./headshot_christmas.jpg";
+            document.querySelector('#picture').className = "nofilter";
+        }
     </script>
 
 </body>
